@@ -1,0 +1,217 @@
+
+
+
+% {}\documentclass[a4paper,landscape,twoside]{article}
+% {}\documentclass[a4paper,landscape,10pt]{article}
+
+% {}\documentclass[a4paper]{article}
+{}\documentclass[a4paper,landscape]{article}
+
+
+%-----------------------------------------------------------------
+% GENERAL PACKAGES
+%-----------------------------------------------------------------
+\RequirePackage[ddmmyyyy]{datetime} % change date format
+\renewcommand{\dateseparator}{.} % select date separator character
+\RequirePackage[shortlabels]{enumitem} % pause/resume lists
+\RequirePackage{multicol} % multi column format
+\RequirePackage{graphicx} % used for figures
+% \graphicspath{{images/}} % put figures inside folder 'images'  in same folder as .tex %%% why? do? TODO
+\RequirePackage[dvipsnames]{xcolor} %colors, dvips -> extra premade colors
+\RequirePackage[explicit]{titlesec} % formating of titles
+% \RequirePackage{amssymb}
+\RequirePackage{siunitx} % SI units
+\usepackage{amsmath, amssymb} % For mathematical symbols and equations
+% \RequirePackage{amsfonts} % more math stuff
+\RequirePackage{mathtools} % even more math stuff
+\RequirePackage{empheq} % Fancy boxed equations
+\RequirePackage{fancybox} % Additional box types
+\RequirePackage{subcaption}
+\RequirePackage[hidelinks]{hyperref} % used for hyperlinked nodes
+% \usepackage{hyperref} % For hyperlinks
+\RequirePackage[document]{ragged2e} % left ragged text
+\RequirePackage{atbegshi}  % special commands that apply tikz to all pages
+\RequirePackage{fancyhdr} % custom header/footer
+\RequirePackage{etoolbox} % Boolean and if/else
+\RequirePackage{calc} % math inside other commands
+\RequirePackage{booktabs}
+
+\RequirePackage{multirow}
+
+\usepackage{parskip} % For paragraph spacing
+
+\usepackage{lipsum} % For dummy text (can be removed)
+\usepackage[ngerman]{babel}
+
+\usepackage{lmodern}
+\usepackage{longtable}
+%=================================================================
+% O P T I O N S   S T A R T
+%=================================================================
+
+%-----------------------------------------------------------------
+% GEOMETRY OPTIONS
+%-----------------------------------------------------------------
+
+\newlength{\paperh}
+\newlength{\paperw}
+\newlength{\inmar}
+\newlength{\outmar}
+\newlength{\topmar}
+\newlength{\botmar}
+\newlength{\footmar}
+
+
+\DeclareOption{a4standard}{
+    \setlength\paperh{297mm}
+    \setlength\paperw{210mm}
+    \setlength\inmar{20mm}
+    \setlength\outmar{20mm}
+    \setlength\topmar{20mm}
+    \setlength\botmar{20mm}
+    \setlength\footmar{12mm}
+}
+
+\DeclareOption{a4compact}{
+    \setlength\paperh{297mm}
+    \setlength\paperw{210mm}
+    \setlength\inmar{1mm}
+    \setlength\outmar{1mm}
+    \setlength\topmar{1mm}
+    \setlength\botmar{1mm}
+    \setlength\footmar{5mm}
+}
+
+\DeclareOption{a3compact}{
+    \setlength\paperh{420mm}
+    \setlength\paperw{297mm}
+    \setlength\inmar{1mm}
+    \setlength\outmar{1mm}
+    \setlength\topmar{1mm}
+    \setlength\botmar{1mm}
+    \setlength\footmar{5mm}
+}
+
+%-----------------------------------------------------------------
+% COLOR OPTIONS
+%-----------------------------------------------------------------
+% color1 - main color
+% color2 - Blue color
+% color3 - Highlight color
+
+\DeclareOption{colorful}{
+    \colorlet{color1}{black}
+    \colorlet{color2}{NavyBlue}
+    \definecolor{color3}{HTML}{FFE534} % bf2042yellow
+}
+
+\DeclareOption{b/w}{
+    \colorlet{color1}{black}
+    \colorlet{color2}{black}
+    \colorlet{color3}{black!20}
+}
+
+%=================================================================
+% PROCESS OPTIONS
+%=================================================================
+\ExecuteOptions{a4standard, colorful}
+\ProcessOptions\relax
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% O P T I O N S   E N D
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GLOBAL FORMATTING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage[utf8]{inputenc} % more charecter inpus (ü,ö,ä)
+\RequirePackage[T1]{fontenc}
+\RequirePackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\RequirePackage[
+    paperheight=\paperh,
+    paperwidth=\paperw,
+    margin=0.1cm,
+    top=\topmar,
+    bottom=\botmar,
+    headsep=0.5cm,
+    headheight=0.5cm,
+    footskip=\footmar,
+    inner=\inmar,
+    outer=\outmar,
+    centering
+]{geometry}
+
+%-----------------------------------------------------------------
+% GLOBAL PARAMETER COMMANDS
+%-----------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{Seite \thepage}
+
+%-----------------------------------------------------------------
+% OTHER FORMATTING
+%-----------------------------------------------------------------
+%indent for paragraph
+\setlength{\parindent}{0pt}
+%space between paragraphs
+\setlength{\parskip}{0.3em}
+
+%space between columns
+\setlength{\columnsep}{0.2cm}
+% create lines between columns and define color of columns
+\setlength{\columnseprule}{1pt} %set thickness default 1pt
+\def\columnseprulecolor{\color{black}}
+
+% spacing within lists
+\setlist[enumerate]{nosep}
+\setlist[itemize]{nosep}
+\setlist[description]{nosep}
+
+%-----------------------------------------------------------------
+% Kaptielnummmer
+%-----------------------------------------------------------------
+  \usepackage{sectsty}
+  % \sectionfont{\clearpage\Large\bfseries} % Top-level section (unnumbered)
+  \setcounter{secnumdepth}{2} % Number subsections (##)
+  % \setcounter{tocdepth}{2} % Include subsections in TOC
+  \renewcommand{\thesubsection}{\arabic{subsection} } % Number subsections as 1., 2., etc.
+%-----------------------------------------------------------------
+  \setlist[itemize]{leftmargin=4mm}
+
+%command for tight list 
+\providecommand{\tightlist}{\setlength{\itemsep}{1mm}\setlength{\parskip}{1mm}}
+
+% image 
+\let\oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[2][]{\oldincludegraphics[#1, width=0.7\textwidth, keepaspectratio]{#2}}
+
+
+
+%-----------------------------------------------------------------
+% INHALT
+%-----------------------------------------------------------------
+
+\begin{document}
+
+\begin{multicols}{4}
+
+	\begin{center}
+		%-----------------------------------------------------------------
+		\LARGE \textbf{\colorbox{RoyalBlue}{\textcolor{white}{Strategische Studien II}}} \\
+		\normalsize
+		\textbf{\colorbox{lightgray}{\textcolor{Black}{Silvan Stadelmann} \url{silvasta@ethz.ch}}}\\
+		\today{}
+		\footnotesize
+		%-----------------------------------------------------------------
+	\end{center}
+
+	\tableofcontents
+
+	$body$
+\end{multicols}
+
+
+\end{document}
